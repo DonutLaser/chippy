@@ -1,0 +1,8 @@
+-- Draw '0' character
+LD I 0
+LD V0 5
+LD V1 5
+DRW V0 V1 5
+
+:loop
+JP loop
