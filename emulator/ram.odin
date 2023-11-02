@@ -1,4 +1,4 @@
-package main
+package emulator
 
 RAM :: struct {
 	data: [4096]u8,

@@ -1,4 +1,4 @@
-package main
+package emulator
 
 CPU :: struct {
 	GPR:   [16]u8, // general purpose registers

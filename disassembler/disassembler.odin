@@ -1,4 +1,4 @@
-package main
+package disassembler
 
 import "core:fmt"
 
