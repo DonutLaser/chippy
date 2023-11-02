@@ -3,10 +3,19 @@ package main
 import "core:fmt"
 import "core:os"
 
+import "assembler"
+import "disassembler"
+import "emulator"
+
+Subcommand :: enum {
+	BUILD,
+	RUN,
+	DEBUG,
+}
+
 Args :: struct {
-	dump_instructions: bool,
-	assemble:          bool,
-	filename:          string,
+	subcommand: Subcommand,
+	filename:   string,
 }
 
 parse_args :: proc() -> (Args, bool) {
@@ -20,10 +29,12 @@ parse_args :: proc() -> (Args, bool) {
 	}
 
 	for arg in args {
-		if arg == "-d" {
-			result.dump_instructions = true
-		} else if arg == "-a" {
-			result.assemble = true
+		if arg == "dasm" {
+			result.subcommand = .DEBUG
+		} else if arg == "build" {
+			result.subcommand = .BUILD
+		} else if arg == "run" {
+			result.subcommand = .RUN
 		} else {
 			result.filename = arg
 		}
@@ -44,11 +55,12 @@ main :: proc() {
 	data, file_ok := os.read_entire_file_from_filename(args.filename)
 	if !file_ok {return}
 
-	if args.dump_instructions {
-		disassemble(data)
-	} else if args.assemble {
-		assemble(string(data))
-	} else {
-		emulate(data)
+	switch args.subcommand {
+	case .BUILD:
+		assembler.assemble(string(data))
+	case .RUN:
+		emulator.emulate(data)
+	case .DEBUG:
+		disassembler.disassemble(data)
 	}
 }
