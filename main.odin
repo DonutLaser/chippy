@@ -2,6 +2,7 @@ package main
 
 import "core:fmt"
 import "core:os"
+import "core:path/filepath"
 
 import "assembler"
 import "disassembler"
@@ -55,9 +56,11 @@ main :: proc() {
 	data, file_ok := os.read_entire_file_from_filename(args.filename)
 	if !file_ok {return}
 
+	filename := filepath.stem(args.filename)
+
 	switch args.subcommand {
 	case .BUILD:
-		assembler.assemble(string(data))
+		assembler.assemble(string(data), filename)
 	case .RUN:
 		emulator.emulate(data)
 	case .DEBUG:
