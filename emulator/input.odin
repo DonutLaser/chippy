@@ -70,10 +70,10 @@ input_consume_events :: proc() {
 			case .M:
 				instance.keys[Key.Key7] = state
 				if state == 1 {instance.last_key_pressed = Key.Key7}
-			case .LESS:
+			case .COMMA:
 				instance.keys[Key.Key8] = state
 				if state == 1 {instance.last_key_pressed = Key.Key8}
-			case .GREATER:
+			case .PERIOD:
 				instance.keys[Key.Key9] = state
 				if state == 1 {instance.last_key_pressed = Key.Key9}
 			case .H:
