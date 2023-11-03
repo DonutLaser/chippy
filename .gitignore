@@ -1,3 +1,4 @@
 chip8.exe
 chip8.pdb
 tests/
+*.ch8
