@@ -3,8 +3,6 @@ package emulator
 import "core:fmt"
 import "core:math/rand"
 
-INSTRUCTIONS_PER_STEP :: 10
-
 emulate :: proc(program: []u8) {
 	// cpu := cpu_new()
 	// ram := ram_new()
