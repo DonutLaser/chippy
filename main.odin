@@ -19,6 +19,16 @@ Args :: struct {
 	filename:   string,
 }
 
+read_file :: proc(filename: string) -> ([]u8, bool) {
+	data, ok := os.read_entire_file_from_filename(filename)
+	if !ok {
+		fmt.eprintf("ERROR: cannot read file: %s\n", filename)
+		return []u8{}, false
+	}
+
+	return data, true
+}
+
 parse_args :: proc() -> (Args, bool) {
 	result := Args{}
 
@@ -53,7 +63,7 @@ main :: proc() {
 	args, args_ok := parse_args()
 	if !args_ok {return}
 
-	data, file_ok := os.read_entire_file_from_filename(args.filename)
+	data, file_ok := read_file(args.filename)
 	if !file_ok {return}
 
 	filename := filepath.stem(args.filename)
