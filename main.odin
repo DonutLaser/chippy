@@ -5,6 +5,7 @@ import "core:os"
 import "core:path/filepath"
 
 import "assembler"
+import "debugger"
 import "disassembler"
 import "emulator"
 
@@ -40,7 +41,7 @@ parse_args :: proc() -> (Args, bool) {
 	}
 
 	for arg in args {
-		if arg == "dasm" {
+		if arg == "debug" {
 			result.subcommand = .DEBUG
 		} else if arg == "build" {
 			result.subcommand = .BUILD
@@ -74,6 +75,6 @@ main :: proc() {
 	case .RUN:
 		emulator.emulate(data)
 	case .DEBUG:
-		disassembler.disassemble(data)
+		debugger.debug(data)
 	}
 }
