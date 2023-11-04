@@ -13,7 +13,7 @@ UI_State :: struct {
 }
 
 ui_begin_container :: proc(rect: gui.Rect, name: cstring) {
-	color := gui.Color{60, 60, 60, 255}
+	color := gui.Color{125, 125, 125, 255}
 
 	title_rect := gui.Rect{rect.x - CONTAINER_BORDER, rect.y - CONTAINER_TITLE_HEIGHT, rect.w + CONTAINER_BORDER * 2, CONTAINER_TITLE_HEIGHT}
 	gui.draw_rect(title_rect, color)

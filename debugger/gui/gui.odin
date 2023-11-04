@@ -15,6 +15,10 @@ kill :: proc() {
 	window_kill()
 }
 
+draw_background :: proc(color: Color) {
+	renderer_set_background_color(color)
+}
+
 draw_rect :: proc(rect: Rect, color: Color) {
 	renderer_draw_rect(rect, color)
 }

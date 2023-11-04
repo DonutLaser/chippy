@@ -61,6 +61,11 @@ renderer_kill :: proc() {
 }
 
 @(private)
+renderer_set_background_color :: proc(color: Color) {
+	sdl.SetRenderDrawColor(instance.internal, color.r, color.g, color.b, color.a)
+}
+
+@(private)
 renderer_draw_rect :: proc(rect: Rect, color: Color) {
 	append(&instance.queue, Render_Instruction{kind = .RECT, data = Render_Instruction_Rect{rect = rect, color = color}})
 }
@@ -77,7 +82,6 @@ renderer_draw_text :: proc(text: cstring, font: ^Font, rect: Rect, color: Color)
 
 @(private)
 renderer_draw :: proc() {
-	sdl.SetRenderDrawColor(instance.internal, 0, 0, 0, 255)
 	sdl.RenderClear(instance.internal)
 
 	for ins in instance.queue {
