@@ -67,7 +67,7 @@ get_pixels_from_byte :: proc(b: u8) -> [8]u8 {
 
 	start: u8 = 1
 	for i: u8 = 0; i < 8; i += 1 {
-		result[7 - i] = (b & start) >> 1
+		result[7 - i] = (b & start) >> i
 		start <<= 1
 	}
 
