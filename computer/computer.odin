@@ -324,6 +324,8 @@ tick :: proc(computer: ^Computer) {
 
 		instructions_executed += 1
 	}
+
+	instructions_executed = 0
 }
 
 set_key_pressed :: proc(computer: ^Computer, key: Key, pressed: bool) {
