@@ -1,32 +1,32 @@
 package emulator
 
-import "core:fmt"
-import "core:math/rand"
+import "../computer"
+import "../gui"
 
 emulate :: proc(program: []u8) {
-	// cpu := cpu_new()
-	// ram := ram_new()
-	// display, ok := display_new(5)
-	// if !ok {
-	// 	return
-	// }
+	com := computer.new()
 
-	// ram_copy_into(&ram, program, 0x200)
+	ok := gui.init()
+	if !ok {return}
+	defer gui.kill()
 
-	// for true {
-	// 	input_consume_events()
-	// 	if input_was_quit_requested() {
-	// 		break
-	// 	}
+	computer.load_program(&com, program)
+	com.display.scale = 5
 
-	// 	if cpu.DT > 0 {cpu.DT -= 1}
-	// 	if cpu.ST > 0 {cpu.ST -= 1}
+	for gui.input_consume_events() {
+		gui.draw_background(gui.Color{0, 0, 0, 255})
 
-	// 	instructions_executed := 0
+		computer.tick(&com)
 
+		for y: i32 = 0; y < computer.DISPLAY_HEIGHT; y += 1 {
+			for x: i32 = 0; x < computer.DISPLAY_WIDTH; x += 1 {
+				pixel := com.display.pixels[y * computer.DISPLAY_WIDTH + x]
+				if pixel == 1 {
+					gui.draw_rect(gui.Rect{x * i32(com.display.scale), y * i32(com.display.scale), i32(com.display.scale), i32(com.display.scale)}, gui.WHITE)
+				}
+			}
+		}
 
-	// 	display_render(&display)
-	// }
-
-	// display_kill(&display)
+		gui.draw()
+	}
 }
