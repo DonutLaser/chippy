@@ -332,10 +332,6 @@ set_key_pressed :: proc(computer: ^Computer, key: Key, pressed: bool) {
 	keyboard_set_key_pressed(&computer.keyboard, key, pressed)
 }
 
-is_key_pressed :: proc(computer: ^Computer, key: Key) -> bool {
-	return keyboard_is_key_pressed(&computer.keyboard, key)
-}
-
 @(private = "file")
 get_instruction :: proc(byte1: u8, byte2: u8) -> Instruction {
 	full := (0x00FF & u16(byte1)) << 8 | 0x00FF & u16(byte2)
