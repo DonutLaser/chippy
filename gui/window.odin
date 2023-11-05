@@ -4,8 +4,10 @@ import "core:fmt"
 import sdl "vendor:sdl2"
 import ttf "vendor:sdl2/ttf"
 
-WINDOW_WIDTH :: 934
-WINDOW_HEIGHT :: 712
+WINDOW_WIDTH :: 1280
+WINDOW_HEIGHT :: 720
+// WINDOW_WIDTH :: 934
+// WINDOW_HEIGHT :: 712
 
 @(private = "file")
 instance: Window
@@ -19,7 +21,7 @@ Window :: struct {
 }
 
 @(private)
-window_init :: proc() -> bool {
+window_init :: proc(width: u16, height: u16, title: cstring) -> bool {
 	ok := sdl.Init(sdl.INIT_EVERYTHING)
 	if ok != 0 {
 		print_sdl_error()
@@ -34,7 +36,14 @@ window_init :: proc() -> bool {
 
 	sdl.GL_SetAttribute(sdl.GLattr.FRAMEBUFFER_SRGB_CAPABLE, 1)
 
-	window := sdl.CreateWindow("Chip8 Debugger", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, {})
+	actual_width := width
+	if actual_width == 0 {actual_width = WINDOW_WIDTH}
+	actual_height := height
+	if actual_height == 0 {actual_height = WINDOW_HEIGHT}
+	actual_title := title
+	if actual_title == "" {actual_title = "New window"}
+
+	window := sdl.CreateWindow(actual_title, sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, i32(actual_width), i32(actual_height), {})
 	if window == nil {
 		print_sdl_error()
 		return false

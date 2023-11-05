@@ -1,7 +1,7 @@
 package gui
 
-init :: proc() -> bool {
-	ok := window_init()
+init :: proc(window_width: u16, window_height: u16, window_title: cstring) -> bool {
+	ok := window_init(window_width, window_height, window_title)
 	if !ok {return false}
 	ok = renderer_init(window_instance())
 	if !ok {return false}
