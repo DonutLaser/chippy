@@ -3,7 +3,7 @@ package debugger
 CONTAINER_TITLE_HEIGHT :: 24
 CONTAINER_BORDER :: 1
 
-import "gui"
+import "../gui"
 
 @(private = "file")
 state: UI_State

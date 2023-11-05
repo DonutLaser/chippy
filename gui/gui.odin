@@ -10,7 +10,6 @@ init :: proc() -> bool {
 }
 
 kill :: proc() {
-	// Must be in this particular order. Not great, don't care...
 	renderer_kill()
 	window_kill()
 }
