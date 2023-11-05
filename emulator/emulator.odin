@@ -1,17 +1,19 @@
 package emulator
 
+SCREEN_SCALE :: 5
+
 import "../computer"
 import "../gui"
 
 emulate :: proc(program: []u8) {
 	com := computer.new()
 
-	ok := gui.init()
+	ok := gui.init(computer.DISPLAY_WIDTH * SCREEN_SCALE, computer.DISPLAY_HEIGHT * SCREEN_SCALE, "Chip8")
 	if !ok {return}
 	defer gui.kill()
 
 	computer.load_program(&com, program)
-	com.display.scale = 5
+	com.display.scale = SCREEN_SCALE
 
 	for gui.input_consume_events() {
 		gui.draw_background(gui.Color{0, 0, 0, 255})
