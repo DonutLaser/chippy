@@ -33,9 +33,9 @@ emulate :: proc(program: []u8) {
 		computer.set_key_pressed(&com, computer.Key.KeyE, gui.input_is_key_pressed(.S))
 		computer.set_key_pressed(&com, computer.Key.KeyF, gui.input_is_key_pressed(.D))
 
-		gui.draw_background(gui.Color{0, 0, 0, 255})
-
 		computer.tick(&com)
+
+		gui.draw_background(gui.Color{0, 0, 0, 255})
 
 		for y: i32 = 0; y < computer.DISPLAY_HEIGHT; y += 1 {
 			for x: i32 = 0; x < computer.DISPLAY_WIDTH; x += 1 {
