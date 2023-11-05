@@ -2,6 +2,7 @@ package debugger
 
 CONTAINER_TITLE_HEIGHT :: 24
 CONTAINER_BORDER :: 1
+PADDING :: 10
 
 import "../gui"
 
@@ -22,6 +23,9 @@ ui_begin_container :: proc(rect: gui.Rect, name: cstring) {
 	gui.draw_rect(base_rect, color)
 
 	gui.draw_rect(rect, gui.BLACK)
+
+	state.offset_x = rect.x
+	state.offset_y = rect.y
 }
 
 ui_end_container :: proc() {
