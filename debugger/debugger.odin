@@ -5,6 +5,7 @@ WINDOW_HEIGHT :: 712
 DISPLAY_SCALE :: 9
 
 import "../computer"
+import "../disassembler"
 import "../gui"
 
 debug :: proc(program: []u8) {
@@ -14,8 +15,15 @@ debug :: proc(program: []u8) {
 	if !ok {return}
 	defer gui.kill()
 
-	computer.load_program(&com, program)
+	ok = assets_init()
+	if !ok {return}
 
+	instructions := disassembler.disassemble(program)
+	defer disassembler.free_instructions(instructions)
+
+	instructions_init(instructions)
+
+	computer.load_program(&com, program)
 	for gui.input_consume_events() {
 		computer.set_key_pressed(&com, computer.Key.Key0, gui.input_is_key_pressed(.H))
 		computer.set_key_pressed(&com, computer.Key.Key1, gui.input_is_key_pressed(.U))
@@ -38,6 +46,7 @@ debug :: proc(program: []u8) {
 
 		gui.draw_background(gui.Color{60, 60, 60, 255})
 		display_render(com.display.pixels[:], computer.DISPLAY_WIDTH, computer.DISPLAY_HEIGHT, DISPLAY_SCALE)
+		instructions_render()
 
 		gui.draw()
 	}
