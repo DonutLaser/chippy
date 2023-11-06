@@ -45,9 +45,9 @@ instructions_render :: proc() {
 
 	main_font := assets_get_font(16)
 	for line, index in state.lines {
-		color := gui.Color{125, 125, 125, 255}
+		color := gui.Color{125, 125, 125, 255} // @magic_number
 		if state.current_instruction == u16(index) {
-			color = gui.Color{228, 189, 71, 255}
+			color = gui.Color{228, 189, 71, 255} // @magic_number
 		}
 
 		rect := gui.Rect {
@@ -56,7 +56,7 @@ instructions_render :: proc() {
 			w = i32(line.width),
 			h = i32(line.height),
 		}
-		ui_draw_text(line.text, &main_font, rect, color) // @magic_number
+		ui_draw_text(line.text, &main_font, rect, color)
 	}
 
 	ui_end_container()
