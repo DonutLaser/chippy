@@ -16,12 +16,21 @@ UI_State :: struct {
 ui_begin_container :: proc(rect: gui.Rect, name: cstring) {
 	color := gui.Color{125, 125, 125, 255}
 
+	// Draw title box
 	title_rect := gui.Rect{rect.x - CONTAINER_BORDER, rect.y - CONTAINER_TITLE_HEIGHT, rect.w + CONTAINER_BORDER * 2, CONTAINER_TITLE_HEIGHT}
 	gui.draw_rect(title_rect, color)
 
+	// Draw title text
+	title_font := assets_get_font(16)
+	text_width, text_height := gui.measure_text(&title_font, name)
+	text_rect := gui.Rect{title_rect.x + PADDING, title_rect.y + (title_rect.h / 2) - i32(text_height) / 2, i32(text_width), i32(text_height)}
+	gui.draw_text(name, &title_font, text_rect, gui.BLACK)
+
+	// Draw container border
 	base_rect := gui.Rect{rect.x - CONTAINER_BORDER, rect.y - CONTAINER_BORDER, rect.w + CONTAINER_BORDER * 2, rect.h + CONTAINER_BORDER * 2}
 	gui.draw_rect(base_rect, color)
 
+	// Draw actual container
 	gui.draw_rect(rect, gui.BLACK)
 
 	state.offset_x = rect.x
