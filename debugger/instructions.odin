@@ -52,7 +52,7 @@ instructions_render :: proc() {
 
 		rect := gui.Rect {
 			x = PADDING,
-			y = PADDING + i32(index) * i32(line.height),
+			y = PADDING / 2 + i32(index) * i32(line.height),
 			w = i32(line.width),
 			h = i32(line.height),
 		}
