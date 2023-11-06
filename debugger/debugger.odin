@@ -44,6 +44,8 @@ debug :: proc(program: []u8) {
 
 		computer.tick(&com)
 
+		instructions_set_current_instruction((com.CPU.PC - computer.PROGRAM_OFFSET) / 2)
+
 		gui.draw_background(gui.Color{60, 60, 60, 255})
 		display_render(com.display.pixels[:], computer.DISPLAY_WIDTH, computer.DISPLAY_HEIGHT, DISPLAY_SCALE)
 		instructions_render()
