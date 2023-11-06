@@ -26,6 +26,10 @@ draw_text :: proc(text: cstring, font: ^Font, rect: Rect, color: Color) {
 	renderer_draw_text(text, font, rect, color)
 }
 
+clip_rect :: proc(rect: Rect) {
+	renderer_clip(rect)
+}
+
 draw :: proc() {
 	renderer_draw()
 }

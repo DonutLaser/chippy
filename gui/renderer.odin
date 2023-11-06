@@ -16,6 +16,7 @@ Renderer :: struct {
 Render_Instruction_Kind :: enum {
 	RECT,
 	TEXT,
+	CLIP,
 }
 
 @(private)
@@ -24,6 +25,7 @@ Render_Instruction :: struct {
 	data: union {
 		Render_Instruction_Rect,
 		Render_Instruction_Text,
+		Render_Instruction_Clip,
 	},
 }
 
@@ -37,6 +39,11 @@ Render_Instruction_Rect :: struct {
 Render_Instruction_Text :: struct {
 	rect:    Rect,
 	texture: ^sdl.Texture,
+}
+
+@(private)
+Render_Instruction_Clip :: struct {
+	rect: Rect,
 }
 
 @(private)
@@ -81,6 +88,11 @@ renderer_draw_text :: proc(text: cstring, font: ^Font, rect: Rect, color: Color)
 }
 
 @(private)
+renderer_clip :: proc(rect: Rect) {
+	append(&instance.queue, Render_Instruction{kind = .CLIP, data = Render_Instruction_Clip{rect = rect}})
+}
+
+@(private)
 renderer_draw :: proc() {
 	sdl.RenderClear(instance.internal)
 
@@ -90,6 +102,8 @@ renderer_draw :: proc() {
 			draw_rect(ins.data.(Render_Instruction_Rect))
 		case .TEXT:
 			draw_text(ins.data.(Render_Instruction_Text))
+		case .CLIP:
+			clip_rect(ins.data.(Render_Instruction_Clip))
 		}
 	}
 
@@ -112,4 +126,14 @@ draw_text :: proc(instruction: Render_Instruction_Text) {
 	sdl.RenderCopy(instance.internal, instruction.texture, nil, &rect)
 
 	sdl.DestroyTexture(instruction.texture)
+}
+
+@(private = "file")
+clip_rect :: proc(instruction: Render_Instruction_Clip) {
+	if rect_are_equal(instruction.rect, Rect{0, 0, 0, 0}) {
+		sdl.RenderSetClipRect(instance.internal, nil)
+	} else {
+		rect := rect_to_sdl_rect(instruction.rect)
+		sdl.RenderSetClipRect(instance.internal, &rect)
+	}
 }
