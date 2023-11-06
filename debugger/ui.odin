@@ -33,11 +33,15 @@ ui_begin_container :: proc(rect: gui.Rect, name: cstring, bg_color: gui.Color) {
 	// Draw actual container
 	gui.draw_rect(rect, bg_color)
 
+	gui.clip_rect(rect)
+
 	state.offset_x = rect.x
 	state.offset_y = rect.y
 }
 
 ui_end_container :: proc() {
+	gui.clip_rect(gui.Rect{0, 0, 0, 0})
+
 	state.offset_x = 0
 	state.offset_y = 0
 }
