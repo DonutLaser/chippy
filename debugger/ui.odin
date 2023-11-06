@@ -13,7 +13,7 @@ UI_State :: struct {
 	offset_x, offset_y: i32,
 }
 
-ui_begin_container :: proc(rect: gui.Rect, name: cstring) {
+ui_begin_container :: proc(rect: gui.Rect, name: cstring, bg_color: gui.Color) {
 	color := gui.Color{125, 125, 125, 255}
 
 	// Draw title box
@@ -31,7 +31,7 @@ ui_begin_container :: proc(rect: gui.Rect, name: cstring) {
 	gui.draw_rect(base_rect, color)
 
 	// Draw actual container
-	gui.draw_rect(rect, gui.BLACK)
+	gui.draw_rect(rect, bg_color)
 
 	state.offset_x = rect.x
 	state.offset_y = rect.y

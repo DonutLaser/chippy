@@ -41,7 +41,7 @@ instructions_render :: proc() {
 		w = 326, // @magic_number
 		h = WINDOW_HEIGHT - PADDING * 2 - CONTAINER_TITLE_HEIGHT,
 	}
-	ui_begin_container(container_rect, "Instructions")
+	ui_begin_container(container_rect, "Instructions", gui.Color{22, 21, 21, 255})
 
 	main_font := assets_get_font(16)
 	for line, index in state.lines {
@@ -51,7 +51,7 @@ instructions_render :: proc() {
 			w = i32(line.width),
 			h = i32(line.height),
 		}
-		ui_draw_text(line.text, &main_font, rect, gui.WHITE)
+		ui_draw_text(line.text, &main_font, rect, gui.Color{125, 125, 125, 255})
 	}
 
 	ui_end_container()
