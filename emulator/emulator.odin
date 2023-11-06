@@ -1,6 +1,6 @@
 package emulator
 
-SCREEN_SCALE :: 5
+SCREEN_SCALE :: 10
 
 import "../computer"
 import "../gui"
@@ -13,7 +13,6 @@ emulate :: proc(program: []u8) {
 	defer gui.kill()
 
 	computer.load_program(&com, program)
-	com.display.scale = SCREEN_SCALE
 
 	for gui.input_consume_events() {
 		computer.set_key_pressed(&com, computer.Key.Key0, gui.input_is_key_pressed(.H))
@@ -41,7 +40,7 @@ emulate :: proc(program: []u8) {
 			for x: i32 = 0; x < computer.DISPLAY_WIDTH; x += 1 {
 				pixel := com.display.pixels[y * computer.DISPLAY_WIDTH + x]
 				if pixel == 1 {
-					gui.draw_rect(gui.Rect{x * i32(com.display.scale), y * i32(com.display.scale), i32(com.display.scale), i32(com.display.scale)}, gui.WHITE)
+					gui.draw_rect(gui.Rect{x * i32(SCREEN_SCALE), y * i32(SCREEN_SCALE), i32(SCREEN_SCALE), i32(SCREEN_SCALE)}, gui.WHITE)
 				}
 			}
 		}

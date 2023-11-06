@@ -8,13 +8,12 @@ DISPLAY_HEIGHT :: 32
 
 @(private)
 Display :: struct {
-	scale:  u8,
 	pixels: [DISPLAY_WIDTH * DISPLAY_HEIGHT]u8, // @wasted_memory
 }
 
 @(private)
 display_new :: proc() -> Display {
-	return Display{scale = 1, pixels = [DISPLAY_WIDTH * DISPLAY_HEIGHT]u8{}}
+	return Display{pixels = [DISPLAY_WIDTH * DISPLAY_HEIGHT]u8{}}
 }
 
 @(private)

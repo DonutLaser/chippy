@@ -15,7 +15,6 @@ debug :: proc(program: []u8) {
 	defer gui.kill()
 
 	computer.load_program(&com, program)
-	com.display.scale = DISPLAY_SCALE
 
 	for gui.input_consume_events() {
 		computer.set_key_pressed(&com, computer.Key.Key0, gui.input_is_key_pressed(.H))
@@ -38,7 +37,7 @@ debug :: proc(program: []u8) {
 		computer.tick(&com)
 
 		gui.draw_background(gui.Color{60, 60, 60, 255})
-		display_render(com.display.pixels[:], computer.DISPLAY_WIDTH, computer.DISPLAY_HEIGHT, com.display.scale)
+		display_render(com.display.pixels[:], computer.DISPLAY_WIDTH, computer.DISPLAY_HEIGHT, DISPLAY_SCALE)
 
 		gui.draw()
 	}
