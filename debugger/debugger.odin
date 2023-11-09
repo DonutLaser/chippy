@@ -30,6 +30,9 @@ debug :: proc(program: []u8) {
 	other_registers_init()
 	defer other_registers_kill()
 
+	timers_init()
+	defer timers_kill()
+
 	computer.load_program(&com, program)
 	for gui.input_consume_events() {
 		computer.set_key_pressed(&com, computer.Key.Key0, gui.input_is_key_pressed(.H))
@@ -54,6 +57,7 @@ debug :: proc(program: []u8) {
 		instructions_set_current_instruction((com.CPU.PC - computer.PROGRAM_OFFSET) / 2)
 		gprs_update(com.CPU.GPR)
 		other_registers_update(com.CPU.I, u16(com.CPU.SP), com.CPU.PC)
+		timers_update(com.CPU.DT, com.CPU.ST)
 
 		gui.draw_background(gui.Color{60, 60, 60, 255})
 
@@ -61,6 +65,7 @@ debug :: proc(program: []u8) {
 		instructions_render()
 		gprs_render()
 		other_registers_render()
+		timers_render()
 
 		gui.draw()
 	}
