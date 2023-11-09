@@ -31,6 +31,8 @@ debug :: proc(program: []u8) {
 	defer timers_kill()
 	stack_init()
 	defer stack_kill()
+	keys_init()
+	defer keys_kill()
 
 	computer.load_program(&com, program)
 	for gui.input_consume_events() {
@@ -59,6 +61,26 @@ debug :: proc(program: []u8) {
 		timers_update(com.CPU.DT, com.CPU.ST)
 		stack_update(com.CPU.stack)
 		stack_set_stack_top(com.CPU.SP)
+		keys_update(
+			[16]bool{
+				gui.input_is_key_pressed(.H),
+				gui.input_is_key_pressed(.U),
+				gui.input_is_key_pressed(.I),
+				gui.input_is_key_pressed(.O),
+				gui.input_is_key_pressed(.J),
+				gui.input_is_key_pressed(.K),
+				gui.input_is_key_pressed(.L),
+				gui.input_is_key_pressed(.M),
+				gui.input_is_key_pressed(.COMMA),
+				gui.input_is_key_pressed(.PERIOD),
+				gui.input_is_key_pressed(.Q),
+				gui.input_is_key_pressed(.W),
+				gui.input_is_key_pressed(.E),
+				gui.input_is_key_pressed(.A),
+				gui.input_is_key_pressed(.S),
+				gui.input_is_key_pressed(.D),
+			},
+		)
 
 		gui.draw_background(gui.Color{60, 60, 60, 255})
 
@@ -68,6 +90,7 @@ debug :: proc(program: []u8) {
 		other_registers_render()
 		timers_render()
 		stack_render()
+		keys_render()
 
 		gui.draw()
 	}
