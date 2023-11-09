@@ -10,7 +10,7 @@ fonts: map[u16]gui.Font
 assets_init :: proc() -> bool {
 	fonts = make(map[u16]gui.Font)
 
-	sizes_to_load := []u16{16}
+	sizes_to_load := []u16{16, 28}
 	for size in sizes_to_load {
 		font, ok := gui.load_font(DEFAULT_FONT, size)
 		if !ok {return false}
