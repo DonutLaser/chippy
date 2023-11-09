@@ -22,6 +22,7 @@ debug :: proc(program: []u8) {
 	defer disassembler.free_instructions(instructions)
 
 	instructions_init(instructions)
+	defer instructions_kill()
 
 	computer.load_program(&com, program)
 	for gui.input_consume_events() {

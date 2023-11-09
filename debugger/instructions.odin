@@ -34,6 +34,10 @@ instructions_init :: proc(instructions: [dynamic]cstring) {
 	}
 }
 
+instructions_kill :: proc() {
+	delete(state.lines)
+}
+
 instructions_set_current_instruction :: proc(index: u16) {
 	state.current_instruction = index
 }
