@@ -59,26 +59,32 @@ other_registers_kill :: proc() {
 other_registers_update :: proc(I: u16, SP: u16, PC: u16) {
 	main_font := assets_get_font(16)
 
-	state.I.value = I
-	delete(state.I.text)
-	state.I.text = fmt.caprintf("I:  0x%X", state.I.value)
-	width, height := gui.measure_text(&main_font, state.I.text)
-	state.I.width = width
-	state.I.height = height
+	if (state.I.value != I) {
+		state.I.value = I
+		delete(state.I.text)
+		state.I.text = fmt.caprintf("I:  0x%X", state.I.value)
+		width, height := gui.measure_text(&main_font, state.I.text)
+		state.I.width = width
+		state.I.height = height
+	}
 
-	state.PC.value = PC
-	delete(state.PC.text)
-	state.PC.text = fmt.caprintf("PC: 0x%X", state.PC.value)
-	width, height = gui.measure_text(&main_font, state.PC.text)
-	state.PC.width = width
-	state.PC.height = height
+	if (state.PC.value != PC) {
+		state.PC.value = PC
+		delete(state.PC.text)
+		state.PC.text = fmt.caprintf("PC: 0x%X", state.PC.value)
+		width, height := gui.measure_text(&main_font, state.PC.text)
+		state.PC.width = width
+		state.PC.height = height
+	}
 
-	state.SP.value = SP
-	delete(state.SP.text)
-	state.SP.text = fmt.caprintf("SP: %X", state.SP.value)
-	width, height = gui.measure_text(&main_font, state.SP.text)
-	state.SP.width = width
-	state.SP.height = height
+	if (state.SP.value != SP) {
+		state.SP.value = SP
+		delete(state.SP.text)
+		state.SP.text = fmt.caprintf("SP: %X", state.SP.value)
+		width, height := gui.measure_text(&main_font, state.SP.text)
+		state.SP.width = width
+		state.SP.height = height
+	}
 }
 
 other_registers_render :: proc() {
