@@ -23,15 +23,14 @@ debug :: proc(program: []u8) {
 
 	instructions_init(instructions)
 	defer instructions_kill()
-
 	gprs_init()
 	defer gprs_kill()
-
 	other_registers_init()
 	defer other_registers_kill()
-
 	timers_init()
 	defer timers_kill()
+	stack_init()
+	defer stack_kill()
 
 	computer.load_program(&com, program)
 	for gui.input_consume_events() {
@@ -58,6 +57,8 @@ debug :: proc(program: []u8) {
 		gprs_update(com.CPU.GPR)
 		other_registers_update(com.CPU.I, u16(com.CPU.SP), com.CPU.PC)
 		timers_update(com.CPU.DT, com.CPU.ST)
+		stack_update(com.CPU.stack)
+		stack_set_stack_top(com.CPU.SP)
 
 		gui.draw_background(gui.Color{60, 60, 60, 255})
 
@@ -66,6 +67,7 @@ debug :: proc(program: []u8) {
 		gprs_render()
 		other_registers_render()
 		timers_render()
+		stack_render()
 
 		gui.draw()
 	}
