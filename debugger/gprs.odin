@@ -32,6 +32,12 @@ gprs_init :: proc() {
 	}
 }
 
+gprs_kill :: proc() {
+	for register in state.registers {
+		delete(register.text)
+	}
+}
+
 gprs_update :: proc(registers: [16]u8) {
 	main_font := assets_get_font(16)
 
@@ -57,7 +63,7 @@ gprs_render :: proc() {
 		w = 178, // @magic_number
 		h = 140, // @magic_number
 	}
-	ui_begin_container(container_rect, "GP Registers", gui.Color{47, 47, 47, 255}) // Čmagic_number
+	ui_begin_container(container_rect, "GP Registers", gui.Color{47, 47, 47, 255}) // @magic_number
 
 	x: i32 = PADDING
 
@@ -72,7 +78,7 @@ gprs_render :: proc() {
 		ui_draw_text(register.text, &main_font, rect, gui.WHITE)
 
 		if index == 7 {
-			x += 87
+			x += 87 // @magic_number
 		}
 	}
 

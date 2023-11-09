@@ -25,6 +25,7 @@ debug :: proc(program: []u8) {
 	defer instructions_kill()
 
 	gprs_init()
+	defer gprs_kill()
 
 	computer.load_program(&com, program)
 	for gui.input_consume_events() {
