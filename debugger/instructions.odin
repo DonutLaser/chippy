@@ -3,6 +3,9 @@ package debugger
 import "../gui"
 
 @(private = "file")
+SCROLL_SPEED := 20
+
+@(private = "file")
 Instruction_Line :: struct {
 	text:          cstring,
 	width, height: u16,
@@ -12,6 +15,7 @@ Instruction_Line :: struct {
 Instructions :: struct {
 	current_instruction: u16,
 	lines:               []Instruction_Line,
+	scroll_offset:       i32,
 }
 
 @(private = "file")
@@ -42,6 +46,13 @@ instructions_set_current_instruction :: proc(index: u16) {
 	state.current_instruction = index
 }
 
+instructions_tick :: proc() {
+	state.scroll_offset += gui.input_get_wheel()
+	if state.scroll_offset > 0 {
+		state.scroll_offset = 0
+	}
+}
+
 instructions_render :: proc() {
 	ui_begin_container_vertical(326, "Instructions", gui.Color{22, 21, 21, 255}) // @magic_number
 
@@ -54,7 +65,7 @@ instructions_render :: proc() {
 
 		rect := gui.Rect {
 			x = PADDING,
-			y = PADDING / 2 + i32(index) * i32(line.height),
+			y = PADDING / 2 + i32(index) * i32(line.height) + state.scroll_offset * i32(SCROLL_SPEED),
 			w = i32(line.width),
 			h = i32(line.height),
 		}

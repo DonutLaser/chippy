@@ -84,6 +84,8 @@ debug :: proc(program: []u8) {
 			},
 		)
 
+		instructions_tick()
+
 		ui_reset(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 		instructions_render()

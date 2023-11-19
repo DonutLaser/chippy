@@ -27,10 +27,13 @@ Key :: enum {
 }
 
 Input :: struct {
-	keys: [Key._COUNT]bool,
+	keys:  [Key._COUNT]bool,
+	wheel: i32,
 }
 
 input_consume_events :: proc() -> bool {
+	state.wheel = 0
+
 	event: sdl.Event
 	for sdl.PollEvent(&event) {
 		#partial switch event.type {
@@ -72,6 +75,8 @@ input_consume_events :: proc() -> bool {
 			case .H:
 				state.keys[Key.H] = pressed
 			}
+		case .MOUSEWHEEL:
+			state.wheel = event.wheel.y
 		}
 	}
 
@@ -80,4 +85,8 @@ input_consume_events :: proc() -> bool {
 
 input_is_key_pressed :: proc(key: Key) -> bool {
 	return state.keys[key]
+}
+
+input_get_wheel :: proc() -> i32 {
+	return state.wheel
 }
