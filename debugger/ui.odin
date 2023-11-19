@@ -35,6 +35,32 @@ ui_reset :: proc(window_width: u16, window_height: u16) {
 	gui.draw_background(gui.Color{60, 60, 60, 255}) // @magic_number
 }
 
+ui_begin_toolbar_horizontal :: proc(height: u16, bg_color: gui.Color) {
+	parent_rect := state.stack[state.stack_pointer]
+
+	// Draw toolbar
+	toolbar_rect := gui.Rect {
+		x = parent_rect.x,
+		y = parent_rect.y,
+		w = parent_rect.w,
+		h = i32(height),
+	}
+	gui.draw_rect(toolbar_rect, bg_color)
+
+	state.stack[state.stack_pointer].y += toolbar_rect.h + PADDING
+	state.stack[state.stack_pointer].h -= toolbar_rect.h + PADDING
+
+	state.stack_pointer += 1
+	state.stack[state.stack_pointer] = toolbar_rect
+
+	gui.clip_rect(toolbar_rect)
+}
+
+ui_end_toolbar_horizontal :: proc() {
+	state.stack_pointer -= 1
+	gui.clip_rect(gui.Rect{0, 0, 0, 0})
+}
+
 ui_begin_container_horizontal :: proc(height: u16, title: cstring, bg_color: gui.Color) {
 	parent_rect := state.stack[state.stack_pointer]
 

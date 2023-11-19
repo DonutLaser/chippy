@@ -1,7 +1,7 @@
 package debugger
 
 WINDOW_WIDTH :: 934
-WINDOW_HEIGHT :: 712
+WINDOW_HEIGHT :: 741
 DISPLAY_SCALE :: 9
 
 import "../computer"
@@ -87,6 +87,9 @@ debug :: proc(program: []u8) {
 		instructions_tick()
 
 		ui_reset(WINDOW_WIDTH, WINDOW_HEIGHT)
+
+		ui_begin_toolbar_horizontal(24, gui.Color{125, 125, 125, 255}) // @magic_number
+		ui_end_toolbar_horizontal()
 
 		instructions_render()
 		display_render(com.display.pixels[:], computer.DISPLAY_WIDTH, computer.DISPLAY_HEIGHT, DISPLAY_SCALE)
