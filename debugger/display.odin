@@ -3,13 +3,7 @@ package debugger
 import "../gui"
 
 display_render :: proc(pixels: []u8, display_width: u16, display_height: u16, pixel_size: u8) {
-	container_rect := gui.Rect {
-		x = WINDOW_WIDTH - i32(display_width * u16(pixel_size)) - PADDING,
-		y = PADDING + CONTAINER_TITLE_HEIGHT,
-		w = i32(display_width * u16(pixel_size)),
-		h = i32(display_height * u16(pixel_size)),
-	}
-	ui_begin_container(container_rect, "Display", gui.BLACK)
+	ui_begin_container_horizontal(display_height * u16(pixel_size), "Display", gui.BLACK)
 
 	for y: i32 = 0; y < i32(display_height); y += 1 {
 		for x: i32 = 0; x < i32(display_width); x += 1 {
@@ -20,5 +14,5 @@ display_render :: proc(pixels: []u8, display_width: u16, display_height: u16, pi
 		}
 	}
 
-	ui_end_container()
+	ui_end_container_horizontal()
 }

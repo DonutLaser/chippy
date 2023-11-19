@@ -53,16 +53,10 @@ keys_update :: proc(keys: [16]bool) {
 }
 
 keys_render :: proc() {
-	container_rect := gui.Rect {
-		x = 328 + PADDING * 2, // @magic_number
-		y = 530, // @magic_number
-		w = 178, // @magic_number
-		h = 172, // @magic_number
-	}
-	ui_begin_container(container_rect, "Keys", gui.Color{47, 47, 47, 255}) // @magic_number
+	ui_begin_container_horizontal(172, "Keys", gui.Color{47, 47, 47, 255}) // @magic_number
 
-	key_width := container_rect.w / 4
-	key_height := container_rect.h / 4
+	key_width: i32 = 172 / 4
+	key_height: i32 = 172 / 4
 
 	main_font := assets_get_font(28)
 
@@ -94,5 +88,5 @@ keys_render :: proc() {
 		}
 	}
 
-	ui_end_container()
+	ui_end_container_horizontal()
 }

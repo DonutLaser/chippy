@@ -57,13 +57,7 @@ gprs_update :: proc(registers: [16]u8) {
 }
 
 gprs_render :: proc() {
-	container_rect := gui.Rect {
-		x = 328 + PADDING * 2, // @magic_number
-		y = 356, // @magic_number
-		w = 178, // @magic_number
-		h = 140, // @magic_number
-	}
-	ui_begin_container(container_rect, "GP Registers", gui.Color{47, 47, 47, 255}) // @magic_number
+	ui_begin_container_horizontal(140, "GP Registers", gui.Color{47, 47, 47, 255}) // @magic_number
 
 	x: i32 = PADDING
 
@@ -71,7 +65,7 @@ gprs_render :: proc() {
 	for register, index in state.registers {
 		rect := gui.Rect {
 			x = x,
-			y = PADDING / 2 + i32(index % 8) * i32(register.height),
+			y = PADDING + i32(index % 8) * i32(register.height),
 			w = i32(register.width),
 			h = i32(register.height),
 		}
@@ -82,5 +76,5 @@ gprs_render :: proc() {
 		}
 	}
 
-	ui_end_container()
+	ui_end_container_horizontal()
 }

@@ -43,13 +43,7 @@ instructions_set_current_instruction :: proc(index: u16) {
 }
 
 instructions_render :: proc() {
-	container_rect := gui.Rect {
-		x = PADDING,
-		y = PADDING + CONTAINER_TITLE_HEIGHT,
-		w = 326, // @magic_number
-		h = WINDOW_HEIGHT - PADDING * 2 - CONTAINER_TITLE_HEIGHT,
-	}
-	ui_begin_container(container_rect, "Instructions", gui.Color{22, 21, 21, 255}) // @magic_number
+	ui_begin_container_vertical(326, "Instructions", gui.Color{22, 21, 21, 255}) // @magic_number
 
 	main_font := assets_get_font(16)
 	for line, index in state.lines {
@@ -67,5 +61,5 @@ instructions_render :: proc() {
 		ui_draw_text(line.text, &main_font, rect, color)
 	}
 
-	ui_end_container()
+	ui_end_container_vertical()
 }

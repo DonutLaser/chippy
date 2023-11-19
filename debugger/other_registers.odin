@@ -88,16 +88,10 @@ other_registers_update :: proc(I: u16, SP: u16, PC: u16) {
 }
 
 other_registers_render :: proc() {
-	container_rect := gui.Rect {
-		x = 518 + PADDING * 2, // @magic_number
-		y = 356, // @magic_number
-		w = 178, // @magic_number
-		h = 70, // @magic_number
-	}
-	ui_begin_container(container_rect, "Other Registers", gui.Color{47, 47, 47, 255}) // @magic_number
+	ui_begin_container_horizontal(70, "Other Registers", gui.Color{47, 47, 47, 255}) // @magic_number
 
 	main_font := assets_get_font(16)
-	y: i32 = PADDING / 2
+	y: i32 = PADDING
 
 	I_rect := gui.Rect {
 		x = PADDING,
@@ -106,7 +100,7 @@ other_registers_render :: proc() {
 		h = i32(state.I.height),
 	}
 	ui_draw_text(state.I.text, &main_font, I_rect, gui.WHITE)
-	y += i32(state.I.height) + PADDING / 2
+	y += i32(state.I.height) + PADDING
 
 	PC_rect := gui.Rect {
 		x = PADDING,
@@ -115,7 +109,7 @@ other_registers_render :: proc() {
 		h = i32(state.PC.height),
 	}
 	ui_draw_text(state.PC.text, &main_font, PC_rect, gui.WHITE)
-	y += i32(state.PC.height) + PADDING / 2
+	y += i32(state.PC.height) + PADDING
 
 	SP_rect := gui.Rect {
 		x = PADDING,
@@ -125,5 +119,5 @@ other_registers_render :: proc() {
 	}
 	ui_draw_text(state.SP.text, &main_font, SP_rect, gui.WHITE)
 
-	ui_end_container()
+	ui_end_container_horizontal()
 }

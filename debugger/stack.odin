@@ -63,13 +63,7 @@ stack_set_stack_top :: proc(top: u8) {
 }
 
 stack_render :: proc() {
-	container_rect := gui.Rect {
-		x = 728, // @magic_number
-		y = 356, // @magic_number
-		w = 105, // @magic_number
-		h = 268, // @magic_number
-	}
-	ui_begin_container(container_rect, "Stack", gui.Color{47, 47, 47, 255}) // @magic_number
+	ui_begin_container_horizontal(268, "Stack", gui.Color{47, 47, 47, 255}) // @magic_number
 
 	main_font := assets_get_font(16)
 	for i: i8 = 15; i >= 0; i -= 1 {
@@ -80,12 +74,12 @@ stack_render :: proc() {
 
 		rect := gui.Rect {
 			x = PADDING,
-			y = PADDING / 2 + i32(15 - i) * i32(state.values[i].height),
+			y = PADDING + i32(15 - i) * i32(state.values[i].height),
 			w = i32(state.values[i].width),
 			h = i32(state.values[i].height),
 		}
 		ui_draw_text(state.values[i].text, &main_font, rect, color)
 	}
 
-	ui_end_container()
+	ui_end_container_horizontal()
 }

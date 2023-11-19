@@ -69,16 +69,10 @@ timers_update :: proc(DT: u8, ST: u8) {
 }
 
 timers_render :: proc() {
-	container_rect := gui.Rect {
-		x = 518 + PADDING * 2, // @magic_number
-		y = 459, // @magic_number
-		w = 178, // @magic_number
-		h = 50, // @magic_number
-	}
-	ui_begin_container(container_rect, "Timers", gui.Color{47, 47, 47, 255}) // @magic_number
+	ui_begin_container_horizontal(50, "Timers", gui.Color{47, 47, 47, 255})
 
 	main_font := assets_get_font(16)
-	y: i32 = PADDING / 2
+	y: i32 = PADDING
 
 	DT_rect := gui.Rect {
 		x = PADDING,
@@ -87,7 +81,7 @@ timers_render :: proc() {
 		h = i32(state.DT.height),
 	}
 	ui_draw_text(state.DT.text, &main_font, DT_rect, gui.WHITE)
-	y += i32(state.DT.height) + PADDING / 2
+	y += i32(state.DT.height) + PADDING
 
 	ST_rect := gui.Rect {
 		x = PADDING,
@@ -96,7 +90,7 @@ timers_render :: proc() {
 		h = i32(state.ST.height),
 	}
 	ui_draw_text(state.ST.text, &main_font, ST_rect, gui.WHITE)
-	y += i32(state.ST.height) + PADDING / 2
+	y += i32(state.ST.height) + PADDING
 
-	ui_end_container()
+	ui_end_container_horizontal()
 }

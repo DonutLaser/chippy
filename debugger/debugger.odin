@@ -34,6 +34,8 @@ debug :: proc(program: []u8) {
 	keys_init()
 	defer keys_kill()
 
+	ui_init(WINDOW_WIDTH, WINDOW_HEIGHT)
+
 	computer.load_program(&com, program)
 	for gui.input_consume_events() {
 		computer.set_key_pressed(&com, computer.Key.Key0, gui.input_is_key_pressed(.H))
@@ -62,7 +64,7 @@ debug :: proc(program: []u8) {
 		stack_update(com.CPU.stack)
 		stack_set_stack_top(com.CPU.SP)
 		keys_update(
-			[16]bool{
+			[16]bool {
 				gui.input_is_key_pressed(.H),
 				gui.input_is_key_pressed(.U),
 				gui.input_is_key_pressed(.I),
@@ -82,15 +84,24 @@ debug :: proc(program: []u8) {
 			},
 		)
 
-		gui.draw_background(gui.Color{60, 60, 60, 255})
+		ui_reset(WINDOW_WIDTH, WINDOW_HEIGHT)
 
-		display_render(com.display.pixels[:], computer.DISPLAY_WIDTH, computer.DISPLAY_HEIGHT, DISPLAY_SCALE)
 		instructions_render()
+		display_render(com.display.pixels[:], computer.DISPLAY_WIDTH, computer.DISPLAY_HEIGHT, DISPLAY_SCALE)
+
+		ui_begin_group_vertical(178) // @magic_number
 		gprs_render()
+		keys_render()
+		ui_end_group_vertical()
+
+		ui_begin_group_vertical(178) // @magic_number
 		other_registers_render()
 		timers_render()
+		ui_end_group_vertical()
+
+		ui_begin_group_vertical(105) // @magic_number
 		stack_render()
-		keys_render()
+		ui_end_group_vertical()
 
 		gui.draw()
 	}
